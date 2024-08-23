@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db-postgres-evento:
+    image: postgres:alpine # imagem
+    ports:
+      - "5435:5432"
+      # porta a porta 5435 do host (a máquina onde o Docker está rodando) está sendo mapeada para a porta 5432 dentro do contêiner PostgreSQL. Não repita a porta de outro container ou imagem.
+    container_name: "db-postgres-user-registration-api"
+    # nome do container não repita o nome de outro container ou imagem já existente no docker hub ou local.
+    # restart: always
+    # sempre que o container parar (desligar ou cpmpudaor ou desligar o docker)ele reinicia automaticamente.
+    volumes:
+      - ./db-user-registration-api:/var/lib/postgresql/data
+      #cria um backup do banco de dados, caso o container seja excluído ou desligado, o volume é mantido.
+    # vincula pasta da imagem com a pasta do computador do container, possibilitando acesso ao banco de dados ao container
+    # Mapeia esse volume para o diretório /var/lib/postgresql/data dentro do container.
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=pgpassword
+      #informar as variáveis de ambientes que o container vai utilizar, informações de usuario e senha.
+volumes:
+  # cria um volume chamado banco-de-dados-evento com o mesmo nome da pasta da imagem acima em volumes vinculada.
+  db-user-registration-api:

@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Gerador para o Prisma Client (biblioteca gerada automaticamente)
+
+// generator client: Define o gerador para o Prisma Client, que é usado para interagir com o banco de dados.
+generator client {
+  provider = "prisma-client-js" // Usando o provedor "prisma-client-js"
+}
+
+// datasource db: Define a fonte de dados para o banco de dados. Neste caso, estamos usando o provedor PostgreSQL e lendo a URL de conexão do ambiente.
+datasource db {
+  provider = "postgresql" // Usando o provedor PostgreSQL
+  url      = env("DATABASE_URL") // Lendo a URL de conexão do ambiente (variável de ambiente)
+}
+
+// model User: Define o modelo chamado “User” com os campos especificados (como ID, nome, e-mail, senha etc.). Os atributos como @id, @unique, @default, @updatedAt são diretivas que modificam o comportamento desses campos.
+model User {
+  id       Int      @id @default(autoincrement()) // Campo de ID, autoincrementado
+  name     String // Campo para o nome do usuário
+  email    String   @unique // Campo para o e-mail do usuário (único)
+  password String // Campo para a senha do usuário
+  phone    String? // Campo opcional para o número de telefone do usuário
+  createAt DateTime @default(now()) // Campo para a data de criação (preenchido automaticamente com a data atual)
+  updateAt DateTime @updatedAt // Campo para a data de atualização (preenchido automaticamente quando o registro é atualizado)
+}
